@@ -35,7 +35,8 @@ function connect(event) {
 function onConnected() {
     // Subscribe to the Public Topic
     stompClient.subscribe('/topic/public', onMessageReceived);
-
+    var listeningTopicName = '/topic/user/' + username;
+    stompClient.subscribe(listeningTopicName, onMessageReceived);
     // Tell your username to the server
     stompClient.send("/app/addUser",
         {},
@@ -57,10 +58,12 @@ function sendMessage(event) {
     if(messageContent && stompClient) {
         var chatMessage = {
             sender: username,
+            receiver: 'sachin',
             content: messageInput.value,
             type: 'CHAT'
         };
-        stompClient.send("/app/chat/sendAll", {}, JSON.stringify(chatMessage));
+//        stompClient.send("/app/chat/sendAll", {}, JSON.stringify(chatMessage));
+        stompClient.send("/app/chat/user", {}, JSON.stringify(chatMessage));
         messageInput.value = '';
     }
     event.preventDefault();
