@@ -10,9 +10,10 @@ import lombok.ToString;
 @ToString
 public class ChatMessage {
 
-    private String sender;
-    private String receiver;
-    private MessageType type;
-    private String content;
+    private String senderName;
+    private String receiverName;
+    private String message;
+    private String date;
+    private MessageType status;
 
 }
