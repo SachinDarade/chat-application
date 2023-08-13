@@ -1,6 +1,7 @@
 package com.keerti.hld.chatspace.controller;
 
-import com.keerti.hld.chatspace.model.ChatMessage;
+import com.keerti.hld.chatspace.common.dal.dao.ChatMessage;
+import com.keerti.hld.chatspace.common.dal.repository.ChatMessageRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -15,6 +16,9 @@ public class ChatController {
 
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
+
+    @Autowired
+    private ChatMessageRepository chatMessageRepository;
 
 //    @MessageMapping("/chat/sendAll")
 //    @SendTo("/topic/public")
@@ -40,11 +44,14 @@ public class ChatController {
     @MessageMapping("/message")     // Will listen to all messages coming to app/message
     @SendTo("/chatroom/public")
     public ChatMessage receivePublicMessage(@Payload ChatMessage message) {
+        message.setReceiverName("EVERYONE");
+        chatMessageRepository.save(message);
         return message;
     }
 
     @MessageMapping("/private-message")
     public ChatMessage receivePrivateMessage(@Payload ChatMessage message) {
+        chatMessageRepository.save(message);
         messagingTemplate.convertAndSendToUser(message.getReceiverName(), "/private", message);  // Sends message to client listening on /user/sachin/private
         return message;
     }

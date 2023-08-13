@@ -1,7 +1,7 @@
 //package com.keerti.hld.chatspace.service;
 //
 //import com.keerti.hld.chatspace.common.enums.Status;
-//import com.keerti.hld.chatspace.model.ChatMessage;
+//import com.keerti.hld.chatspace.common.dal.dao.ChatMessage;
 //import lombok.RequiredArgsConstructor;
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.context.event.EventListener;
